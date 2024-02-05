@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+  <meta charset="UTF-8">
+  <title>wo_o.kis</title>
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+      .field-error {
+          border-color: #dc3545;
+          color: #dc3545;
+      }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragment/header::header}"></div>
+
+<div th:replace="${content}"></div>
+
+<div th:replace="~{fragment/footer::footer}"></div>
+</body>
+</html>
