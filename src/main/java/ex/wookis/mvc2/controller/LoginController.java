@@ -4,21 +4,17 @@ import ex.wookis.mvc2.domain.Member;
 import ex.wookis.mvc2.domain.SessionConst;
 import ex.wookis.mvc2.form.LoginForm;
 import ex.wookis.mvc2.service.LoginService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -38,7 +34,7 @@ public class LoginController {
     public String login(@Validated @ModelAttribute("loginForm") LoginForm form,
                         BindingResult bindingResult,
                         HttpServletRequest request,
-                        @RequestParam(defaultValue = "/login") String redirectURL) {
+                        @RequestParam(defaultValue = "/", name = "redirectURL") String redirectURL) {
         if (bindingResult.hasErrors()) {
             return "loginForm";
         }
@@ -53,13 +49,13 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
-        return "redirect:/";
+        return "redirect:"+redirectURL;
     }
 
     //3. 회원가입 페이지
     @GetMapping("/join")
     public String addForm(@ModelAttribute("member") Member member) {
-        return "addMemberForm";
+        return "join";
     }
 
     //4. 회원 가입 기능 구현
@@ -68,7 +64,7 @@ public class LoginController {
                        BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "addMemberForm";
+            return "join";
         }
 
         service.join(member);
