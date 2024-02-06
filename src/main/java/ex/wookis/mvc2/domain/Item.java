@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Item 관리 모델
+ */
 @Data
 @NoArgsConstructor
 public class Item {
