@@ -40,6 +40,14 @@ public class ItemRepositoryImpl implements ItemRepository{
         saveItem.setRegions(item.getRegions());
         saveItem.setItemType(item.getItemType());
         saveItem.setDeliveryCode(item.getDeliveryCode());
+
+        if (item.getAttachFile() != null) {
+            saveItem.setAttachFile(item.getAttachFile());
+        }
+
+        if (item.getImageFiles() != null) {
+            saveItem.setImageFiles(item.getImageFiles());
+        }
     }
 
     @Override

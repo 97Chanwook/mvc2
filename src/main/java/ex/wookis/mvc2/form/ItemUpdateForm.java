@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,5 +39,9 @@ public class ItemUpdateForm {
 
     @NotBlank
     private String deliveryCode;
+
+    private MultipartFile attachFile;
+
+    private List<MultipartFile> imageFiles;
 
 }

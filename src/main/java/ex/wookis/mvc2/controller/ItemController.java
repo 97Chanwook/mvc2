@@ -5,9 +5,11 @@ import ex.wookis.mvc2.domain.Item;
 import ex.wookis.mvc2.domain.ItemType;
 import ex.wookis.mvc2.form.ItemSaveForm;
 import ex.wookis.mvc2.form.ItemUpdateForm;
-import ex.wookis.mvc2.repository.ItemRepository;
+import ex.wookis.mvc2.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +28,7 @@ import java.util.Map;
 @RequestMapping("/items")
 public class ItemController {
 
-    private final ItemRepository repository;
+    private final ItemService service;
 
     @ModelAttribute("regions")
     public Map<String, String> regions() {
@@ -47,14 +51,14 @@ public class ItemController {
 
     @GetMapping
     public String items(Model model) {
-        List<Item> items = repository.findAll();
+        List<Item> items = service.findItems();
         model.addAttribute("items",items);
         return "item/items";
     }
 
     @GetMapping("/{itemId}")
     public String item(@PathVariable("itemId") Long itemId, Model model) {
-        Item item = repository.findById(itemId);
+        Item item = service.findItem(itemId);
         model.addAttribute("item",item);
         return "item/item";
     }
@@ -68,7 +72,7 @@ public class ItemController {
     @PostMapping("/add")
     public String addItem(@Validated @ModelAttribute("item") ItemSaveForm form,
                           BindingResult bindingResult,
-                          RedirectAttributes redirectAttributes) {
+                          RedirectAttributes redirectAttributes) throws IOException {
 
         log.info("Form Data = {}",form);
         //1. price * quantity 가 10000 보다 작으면 안됀다.
@@ -84,15 +88,7 @@ public class ItemController {
             return "item/addForm";
         }
 
-        Item saveItem = repository.save(Item.builder()
-                .itemName(form.getItemName())
-                .price(form.getPrice())
-                .quantity(form.getQuantity())
-                .open(form.isOpen())
-                .regions(form.getRegions())
-                .itemType(form.getItemType())
-                .deliveryCode(form.getDeliveryCode())
-                .build());
+        Item saveItem = service.saveItem(form);
 
         redirectAttributes.addAttribute("itemId",saveItem.getId());
         return "redirect:/items/{itemId}";
@@ -101,7 +97,7 @@ public class ItemController {
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable("itemId") Long itemId,
                            Model model) {
-        Item item = repository.findById(itemId);
+        Item item = service.findItem(itemId);
         model.addAttribute("item",item);
         return "item/editForm";
     }
@@ -109,8 +105,7 @@ public class ItemController {
     @PostMapping("/{itemId}/edit")
     public String edit(@PathVariable("itemId") Long itemId,
                        @Validated @ModelAttribute("item")ItemUpdateForm form,
-                       BindingResult bindingResult,
-                       RedirectAttributes redirectAttributes) {
+                       BindingResult bindingResult) throws IOException {
         log.info("ID = {}, Form Data = {}",itemId, form);
 
         //1. price * quantity 가 10000 보다 작으면 안됀다.
@@ -126,18 +121,10 @@ public class ItemController {
             return "item/editForm";
         }
 
-        repository.update(itemId, Item.builder()
-                .itemName(form.getItemName())
-                .price(form.getPrice())
-                .quantity(form.getQuantity())
-                .open(form.isOpen())
-                .regions(form.getRegions())
-                .itemType(form.getItemType())
-                .deliveryCode(form.getDeliveryCode())
-                .build());
-
+        service.updateItem(itemId, form);
         return "redirect:/items/{itemId}";
     }
+
 
 
 }

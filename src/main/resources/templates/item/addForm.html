@@ -17,7 +17,7 @@
     <h2 th:text="#{page.addItem}">상품 등록</h2>
   </div>
 
-  <form th:action th:object="${item}" method="post">
+  <form th:action th:object="${item}" method="post" enctype="multipart/form-data">
     <div th:if="${#fields.hasGlobalErrors()}">
       <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
     </div>
@@ -75,6 +75,11 @@
     </select>
     <div class="field-error" th:errors="*{deliveryCode}">오류</div>
 
+    <hr class="my-4">
+      <ul>
+        <li>[[#{label.item.attachFile}]] <input type="file" th:field="*{attachFile}"></li>
+        <li>[[#{label.item.imageFiles}]] <input type="file" th:field="*{imageFiles}"  multiple="multiple" accept="image/*"></li>
+      </ul>
     <hr class="my-4">
 
     <div class="row">

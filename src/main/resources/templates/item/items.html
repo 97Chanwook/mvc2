@@ -26,12 +26,13 @@
         <th th:text="#{label.item.quantity}">수량</th>
       </tr>
       </thead>
+      <!-- ${{}} : 타입리프에서 컨버터 및 포멧터를 적용하기 위함 -->
       <tbody>
       <tr th:each="item : ${items}">
         <td><a th:href="@{/items/{itemId}(itemId=${item.id})}" th:text="${item.id}"></a></td>
         <td><a th:href="@{|/items/${item.id}|}" th:text="${item.itemName}"></a></td>
-        <td th:text="${item.price}"></td>
-        <td th:text="${item.quantity}"></td>
+        <td th:text="${{item.price}}"></td>
+        <td th:text="${{item.quantity}}"></td>
       </tr>
       </tbody>
     </table>
