@@ -45,7 +45,7 @@ public class ItemRepositoryImpl implements ItemRepository{
             saveItem.setAttachFile(item.getAttachFile());
         }
 
-        if (item.getImageFiles() != null) {
+        if (item.getImageFiles().size() > 0) {
             saveItem.setImageFiles(item.getImageFiles());
         }
     }

@@ -35,7 +35,10 @@ public class FileStore {
     public List<UploadFile> storeFileList(List<MultipartFile> files) throws IOException {
         List<UploadFile> storeFiles = new ArrayList<>();
         for (MultipartFile file : files) {
-            storeFiles.add(storeFile(file));
+            UploadFile uploadFile = storeFile(file);
+            if (uploadFile != null) {
+                storeFiles.add(uploadFile);
+            }
         }
         return storeFiles;
     }

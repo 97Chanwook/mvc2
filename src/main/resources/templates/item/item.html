@@ -62,15 +62,15 @@
             th:text="${deliveryCode.displayName}"></option>
   </select>
 
-  <div th:text="#{label.item.attachFile}"></div>
+  <div th:if="${item.attachFile}" th:text="#{label.item.attachFile}"></div>
   <a th:if="${item.attachFile}" th:href="|/download/${itemId}|"
      th:text="${item.getAttachFile().getUploadFileName()}"></a>  <!-- th:text = 첨부파일을 다운받을 수 있는 링크 -->
 
-  <div th:text="#{label.item.imageFiles}"></div>
+  <div th:if = "${item.imageFiles.size() > 0 }" th:text="#{label.item.imageFiles}"></div>
   <!--/*<ul th:each="imgFile : ${item.imageFiles}">
     <li><a th:href="|/img/${imgFile.getStoreFileName()}|" th:text="${imgFile.getUploadFileName()}"/></li>
   </ul>*/-->
-  <img th:each="imgFile : ${item.imageFiles}" th:src="|/img/${imgFile.getStoreFileName()}|" width="300" height="300">
+  <img th:if = "${item.imageFiles.size() > 0}" th:each="imgFile : ${item.imageFiles}"  th:src="|/img/${imgFile.getStoreFileName()}|" width="300" height="300">
 
 
   <hr class="my-4">
