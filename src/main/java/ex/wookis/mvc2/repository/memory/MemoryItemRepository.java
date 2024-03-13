@@ -1,6 +1,7 @@
-package ex.wookis.mvc2.repository;
+package ex.wookis.mvc2.repository.memory;
 
 import ex.wookis.mvc2.domain.Item;
+import ex.wookis.mvc2.repository.ItemRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ItemRepositoryImpl implements ItemRepository{
+public class MemoryItemRepository implements ItemRepository {
     private static Map<Long, Item> store = new HashMap<>();
     private static long sequence = 0L;
 

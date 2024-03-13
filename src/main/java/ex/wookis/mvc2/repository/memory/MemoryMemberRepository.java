@@ -1,12 +1,12 @@
-package ex.wookis.mvc2.repository;
+package ex.wookis.mvc2.repository.memory;
 
 import ex.wookis.mvc2.domain.Member;
-import org.springframework.stereotype.Repository;
+import ex.wookis.mvc2.repository.MemberRepository;
 
 import java.util.*;
 
 //@Repository
-public class MemberRepositoryImpl implements MemberRepository{
+public class MemoryMemberRepository implements MemberRepository {
     private static Map<Long, Member> store = new HashMap<>();
     private static Long sequence = 0L;
 

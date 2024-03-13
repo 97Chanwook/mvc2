@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ex.wookis.mvc2.repository.mybatis.MemberMapper">
+    <!-- useGeneratedKeys="true" -> 자동 키 생성 IDENTITY 전략일 때 사용, keyProperty -> 생성되는 키 속성 -->
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" >
+        insert into member (login_id, name, password)
+        values(#{loginId},#{name},#{password})
+    </insert>
+
+    <select id="findById" resultType="Member">
+        select login_id, name, password
+        from member
+        where id = #{id}
+    </select>
+
+    <select id="findByUserLoginId" resultType="Member">
+        select login_id, name, password
+        from member
+        where login_id = #{userLoginId}
+    </select>
+
+    <select id="findAll" resultType="Member">
+        select login_id, name, password
+        from member
+    </select>
+
+    <!--<select id="findAll">
+        select login_id, name, password
+        from member
+        &lt;!&ndash; 선택적 Where 조건 || 동적 쿼리 &ndash;&gt;
+        <where>
+            <if test="itemName != null and itemName != ''">
+                and item_name like concat('%',#{itemName},'%')
+            </if>
+            &lt;!&ndash; xml 특수문자 해결 방법 1 &ndash;&gt;
+            <if test="maxPrice != null">
+                and price &lt;= #{maxPrice}
+            </if>
+
+            &lt;!&ndash; xml 특수문자 해결 방법 2 &ndash;&gt;
+            <if test="maxPrice != null">
+                <![CDATA[
+                    and price <= #{maxPrice}
+                ]]>
+            </if>
+        </where>
+    </select>-->
+</mapper>

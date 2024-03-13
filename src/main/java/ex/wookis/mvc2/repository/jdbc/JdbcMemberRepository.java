@@ -1,6 +1,7 @@
-package ex.wookis.mvc2.repository;
+package ex.wookis.mvc2.repository.jdbc;
 
 import ex.wookis.mvc2.domain.Member;
+import ex.wookis.mvc2.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,11 +10,10 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.*;
 
-@Repository
-public class JdbcMemberRepository implements MemberRepository{
+//@Repository
+public class JdbcMemberRepository implements MemberRepository {
     private final JdbcTemplate template;
 
-    @Autowired
     public JdbcMemberRepository(DataSource dataSource) {
         this.template = new JdbcTemplate(dataSource);
     }
