@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
+//@Repository
 public class MemberRepositoryImpl implements MemberRepository{
     private static Map<Long, Member> store = new HashMap<>();
     private static Long sequence = 0L;
