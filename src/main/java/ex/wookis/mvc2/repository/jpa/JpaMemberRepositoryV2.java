@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * JPA 를 이용한 MemberRepository
+ * Spring Data JPA 를 이용한 MemberRepository
  */
 @Slf4j
 //@Repository
