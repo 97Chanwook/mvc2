@@ -17,7 +17,7 @@ import java.util.Optional;
  * JPA 를 이용한 MemberRepository
  */
 @Slf4j
-@Repository
+//@Repository
 @Transactional
 @RequiredArgsConstructor
 public class JpaMemberRepository implements MemberRepository {
