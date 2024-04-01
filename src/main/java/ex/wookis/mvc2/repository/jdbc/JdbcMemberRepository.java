@@ -3,6 +3,7 @@ package ex.wookis.mvc2.repository.jdbc;
 import ex.wookis.mvc2.domain.Member;
 import ex.wookis.mvc2.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -27,9 +28,14 @@ public class JdbcMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findById(Long id) {
+    public Optional<Member> findById(Long id) {
         String sql = "selelct * from member where id = ?";
-        return template.queryForObject(sql, memberRowMapper(), id);
+        try {
+            Member findMember = template.queryForObject(sql, memberRowMapper(), id);
+            return Optional.of(findMember);
+        }catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
 

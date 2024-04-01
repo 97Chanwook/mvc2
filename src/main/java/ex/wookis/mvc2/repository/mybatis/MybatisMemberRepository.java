@@ -22,7 +22,7 @@ public class MybatisMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findById(Long id) {
+    public Optional<Member> findById(Long id) {
         return memberMapper.findById(id);
     }
 
