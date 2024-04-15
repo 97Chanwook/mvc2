@@ -56,7 +56,7 @@ public class CustomJpaMemberRepository implements MemberRepository {
 
     private BooleanExpression equalsLoginId(String loginId) {
         if (StringUtils.hasText(loginId)) {
-            return member.name.eq(loginId);
+            return member.loginId.eq(loginId);
         }
 
         return null;
